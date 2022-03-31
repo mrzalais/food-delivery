@@ -6,6 +6,31 @@ class MapParser
 {
     public function parse(string $map): array
     {
-        return [$map];
+        $lines = explode("\n", $map);
+        $parsedMap = [];
+
+        foreach ($lines as $i => $line) {
+            $max = strlen($line);
+            for($j = 0; $j < $max; $j++) {
+                switch ($line[$j]) {
+                    case 'W':
+                        $parsedMap[] = [
+                            'x' => $j,
+                            'y' => $i,
+                            'type' => 'building'
+                        ];
+                        break;
+                    case '_':
+                        $parsedMap[] = [
+                            'x' => $j,
+                            'y' => $i,
+                            'type' => 'road'
+                        ];
+                        break;
+                }
+            }
+        }
+
+        return $parsedMap;
     }
 }
