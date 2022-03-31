@@ -27,6 +27,13 @@ class MapParser
                             'type' => 'road'
                         ];
                         break;
+                    case 'X':
+                        $parsedMap[] = [
+                            'x' => $j,
+                            'y' => $i,
+                            'type' => 'user'
+                        ];
+                    break;
                 }
             }
         }
