@@ -1,12 +1,10 @@
 {
-    "name": "emilybache/racing-car-kata",
-    "description": "A kata to practice SOLID patterns",
     "require": {
         "php": "^8.0"
     },
     "autoload": {
         "psr-4": {
-            "RacingCar\\": "src/"
+            "App\\": "src/"
         }
     },
     "autoload-dev": {
