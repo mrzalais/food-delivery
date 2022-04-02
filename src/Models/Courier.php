@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-class Courier
+class Courier extends User
 {
     private array $activeDeliveries;
     private Vehicle $activeVehicle;
