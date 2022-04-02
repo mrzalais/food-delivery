@@ -37,7 +37,7 @@ class GpsTest extends TestCase
 
         $gps = new Gps($map, new MapParser);
 
-        $order = new Order(1, 1);
+        $order = new Order(1, 1, [2, 2]);
 
         $gps->initOrder($order);
 
