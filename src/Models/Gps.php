@@ -6,6 +6,7 @@ class Gps
 {
     private string $map;
     private MapParser $mapParser;
+    public Delivery $delivery;
 
     public function __construct(string $map, MapParser $mapParser)
     {
@@ -13,14 +14,14 @@ class Gps
         $this->mapParser = $mapParser;
     }
 
-    public function getCurrentLocation(): array|false
+    public function getLocationOfItem(string $type): array|false
     {
         $parsedMap = $this->mapParser->parse($this->map);
         $key = null;
         $line = null;
         foreach ($parsedMap as $x => $parsedMapLine) {
             $search = array_search(
-                'user',
+                $type,
                 array_column($parsedMapLine, 'type'),
                 true
             );
@@ -38,5 +39,10 @@ class Gps
 
         $element = $parsedMap[$line][$key];
         return ['x' => $element['x'], 'y' => $element['y']];
+    }
+
+    public function initDelivery(Delivery $delivery): void
+    {
+        $this->delivery = $delivery;
     }
 }
