@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Tests\Leaderboard;
 
 use App\Models\Gps;
-use App\Models\Delivery;
+use App\Models\Order;
 use App\Models\MapParser;
 use PHPUnit\Framework\TestCase;
 
@@ -31,16 +31,16 @@ class GpsTest extends TestCase
         $this->assertFalse($location);
     }
 
-    public function testItReturnsDeliveryLocation(): void
+    public function testItReturnsOrderLocation(): void
     {
-        $map = "_W|BD";
+        $map = "_W|BO";
 
         $gps = new Gps($map, new MapParser);
 
-        $delivery = new Delivery(1, 1);
+        $order = new Order(1, 1);
 
-        $gps->initDelivery($delivery);
+        $gps->initOrder($order);
 
-        $this->assertEquals(['x' => 1, 'y' => 1], $gps->delivery->coordinates);
+        $this->assertEquals(['x' => 1, 'y' => 1], $gps->order->coordinates);
     }
 }

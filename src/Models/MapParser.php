@@ -9,7 +9,7 @@ class MapParser
     public const TYPE_LAND = 'land';
     public const TYPE_ROAD = 'road';
     public const TYPE_USER = 'user';
-    public const TYPE_DELIVERY = 'delivery';
+    public const TYPE_ORDER = 'order';
 
     public const TYPE_UNKNOWN = 'unknown';
 
@@ -59,11 +59,11 @@ class MapParser
                             'type' => self::TYPE_USER,
                         ];
                         break;
-                    case 'D':
+                    case 'O':
                         $currentLine[] = [
                             'x' => $j,
                             'y' => $i,
-                            'type' => self::TYPE_DELIVERY,
+                            'type' => self::TYPE_ORDER,
                         ];
                         break;
                     default:

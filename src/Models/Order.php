@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-class Delivery
+class Order
 {
     public array $coordinates;
     private int $x;

@@ -6,7 +6,7 @@ class Gps
 {
     private string $map;
     private MapParser $mapParser;
-    public Delivery $delivery;
+    public Order $order;
 
     public function __construct(string $map, MapParser $mapParser)
     {
@@ -41,8 +41,8 @@ class Gps
         return ['x' => $element['x'], 'y' => $element['y']];
     }
 
-    public function initDelivery(Delivery $delivery): void
+    public function initOrder(Order $order): void
     {
-        $this->delivery = $delivery;
+        $this->order = $order;
     }
 }
