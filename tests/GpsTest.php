@@ -10,7 +10,7 @@ use PHPUnit\Framework\TestCase;
 
 class GpsTest extends TestCase
 {
-    public function testItCanReturnYourCurrentLocationInAGivenMap(): void
+    public function testItReturnsYourCurrentLocationInAGivenMap(): void
     {
         $map = "_W|XW";
 
@@ -18,5 +18,15 @@ class GpsTest extends TestCase
         $location = $gps->getCurrentLocation();
 
         $this->assertEquals(['x' => 0, 'y' => 1], $location);
+    }
+
+    public function testItReturnsFalseIfNoCurrentLocationInMap(): void
+    {
+        $map = "_W|BW";
+
+        $gps = new Gps($map, new MapParser);
+        $location = $gps->getCurrentLocation();
+
+        $this->assertFalse($location);
     }
 }

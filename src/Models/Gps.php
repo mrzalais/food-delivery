@@ -13,7 +13,7 @@ class Gps
         $this->mapParser = $mapParser;
     }
 
-    public function getCurrentLocation(): array
+    public function getCurrentLocation(): array|false
     {
         $parsedMap = $this->mapParser->parse($this->map);
         $key = null;
@@ -30,6 +30,10 @@ class Gps
                 $line = $x;
                 break;
             }
+        }
+
+        if (!is_int($key)) {
+            return false;
         }
 
         $element = $parsedMap[$line][$key];
