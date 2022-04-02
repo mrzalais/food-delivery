@@ -12,7 +12,7 @@ class GpsTest extends TestCase
 {
     public function testItCanReturnYourCurrentLocationInAGivenMap(): void
     {
-        $map = "_W\nXW";
+        $map = "_W|XW";
 
         $gps = new Gps($map, new MapParser);
         $location = $gps->getCurrentLocation();
