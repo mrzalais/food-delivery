@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Tests\Leaderboard;
 
 use App\Models\Maze;
-use App\Models\Dijkstra;
 use App\Models\PathFinder;
 use PHPUnit\Framework\TestCase;
 
@@ -41,56 +40,56 @@ class PathFinderTest extends TestCase
     {
         return [
             [
-                'map' => "CBBLLWLLWWWWLLBBR|
-L_BLLWLLWWWWLLBB_|
-L_BBLLWLWWWWLLBB_|
-LL_BLLWLWWWWLLBB_|
-LLL_LLWLWWWWLLBB_|
-LLLL_LWLWWWWLLBB_|
-LLLLW_LLWWWWLLBB_|
-LLLLWL_LWWWWLLB_B|
-LLLLWL_LWWWWLB_BB|
-LLLLWL_LWWWWL_BBB|
-LLLLWL_LWWWWL_BBB|
-LLLLWL___________",
-                'result' => ".BBLLWLLWWWWLLBB.|
-L.BLLWLLWWWWLLBB.|
-L.BBLLWLWWWWLLBB.|
-LL.BLLWLWWWWLLBB.|
-LLL.LLWLWWWWLLBB.|
-LLLL.LWLWWWWLLBB.|
-LLLLW.LLWWWWLLBB.|
-LLLLWL.LWWWWLLB.B|
-LLLLWL.LWWWWLB.BB|
-LLLLWL.LWWWWL.BBB|
-LLLLWL.LWWWWL.BBB|
-LLLLWL_......____"
+                'map' => "CBBLLWLLWWWWLLBBR|"
+                       . "L_BLLWLLWWWWLLBB_|"
+                       . "L_BBLLWLWWWWLLBB_|"
+                       . "LL_BLLWLWWWWLLBB_|"
+                       . "LLL_LLWLWWWWLLBB_|"
+                       . "LLLL_LWLWWWWLLBB_|"
+                       . "LLLLW_LLWWWWLLBB_|"
+                       . "LLLLWL_LWWWWLLB_B|"
+                       . "LLLLWL_LWWWWLB_BB|"
+                       . "LLLLWL_LWWWWL_BBB|"
+                       . "LLLLWL_LWWWWL_BBB|"
+                       . "LLLLWL___________",
+                'result' => ".BBLLWLLWWWWLLBB.|"
+                          . "L.BLLWLLWWWWLLBB.|"
+                          . "L.BBLLWLWWWWLLBB.|"
+                          . "LL.BLLWLWWWWLLBB.|"
+                          . "LLL.LLWLWWWWLLBB.|"
+                          . "LLLL.LWLWWWWLLBB.|"
+                          . "LLLLW.LLWWWWLLBB.|"
+                          . "LLLLWL.LWWWWLLB.B|"
+                          . "LLLLWL.LWWWWLB.BB|"
+                          . "LLLLWL.LWWWWL.BBB|"
+                          . "LLLLWL.LWWWWL.BBB|"
+                          . "LLLLWL_......____"
             ],
             [
-                'map' => "CBBLLWLLWWWWLLBBR|
-L_BLLWLLWWWWLLBB_|
-L________________|
-LL_BLLWLWWWWLLBB_|
-LLL_LLWLWWWWLLBB_|
-LLLL_LWLWWWWLLBB_|
-LLLLW_LLWWWWLLBB_|
-LLLLWL_LWWWWLLB_B|
-LLLLWL_LWWWWLB_BB|
-LLLLWL_LWWWWL_BBB|
-LLLLWL_LWWWWL_BBB|
-LLLLWL___________",
-                'result' => ".BBLLWLLWWWWLLBB.|
-L.BLLWLLWWWWLLBB.|
-L_.............._|
-LL_BLLWLWWWWLLBB_|
-LLL_LLWLWWWWLLBB_|
-LLLL_LWLWWWWLLBB_|
-LLLLW_LLWWWWLLBB_|
-LLLLWL_LWWWWLLB_B|
-LLLLWL_LWWWWLB_BB|
-LLLLWL_LWWWWL_BBB|
-LLLLWL_LWWWWL_BBB|
-LLLLWL___________"
+                'map' => "CBBLLWLLWWWWLLBBR|"
+                       . "L_BLLWLLWWWWLLBB_|"
+                       . "L________________|"
+                       . "LL_BLLWLWWWWLLBB_|"
+                       . "LLL_LLWLWWWWLLBB_|"
+                       . "LLLL_LWLWWWWLLBB_|"
+                       . "LLLLW_LLWWWWLLBB_|"
+                       . "LLLLWL_LWWWWLLB_B|"
+                       . "LLLLWL_LWWWWLB_BB|"
+                       . "LLLLWL_LWWWWL_BBB|"
+                       . "LLLLWL_LWWWWL_BBB|"
+                       . "LLLLWL___________",
+                'result' => ".BBLLWLLWWWWLLBB.|"
+                          . "L.BLLWLLWWWWLLBB.|"
+                          . "L_.............._|"
+                          . "LL_BLLWLWWWWLLBB_|"
+                          . "LLL_LLWLWWWWLLBB_|"
+                          . "LLLL_LWLWWWWLLBB_|"
+                          . "LLLLW_LLWWWWLLBB_|"
+                          . "LLLLWL_LWWWWLLB_B|"
+                          . "LLLLWL_LWWWWLB_BB|"
+                          . "LLLLWL_LWWWWL_BBB|"
+                          . "LLLLWL_LWWWWL_BBB|"
+                          . "LLLLWL___________"
             ]
         ];
     }
