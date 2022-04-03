@@ -6,6 +6,7 @@ namespace Tests\Leaderboard;
 
 use App\Models\Gps;
 use App\Models\Map;
+use App\Models\Vehicle;
 use PHPUnit\Framework\TestCase;
 use App\Models\DistanceCalculator;
 
@@ -80,5 +81,34 @@ class DistanceCalculatorTest extends TestCase
         );
 
         $this->assertEquals(6, ceil($diagonalDistance));
+    }
+
+    public function testItCanCalculateTimeNeededToTravelTheDistance(): void
+    {
+        $map = "C____|"
+            . "_____|"
+            . "_____|"
+            . "_____|"
+            . "____R|";
+
+        $map = new Map($map);
+        $gps = new Gps($map);
+
+        $courierCoordinates = $gps->getLocationOfItemByType(Map::TYPE_COURIER);
+        $recipientCoordinates = $gps->getLocationOfItemByType(Map::TYPE_RECIPIENT);
+
+        $distanceCalculator = new DistanceCalculator;
+
+        $diagonalDistance = $distanceCalculator->getEuclideanDistanceInKilometers(
+            $courierCoordinates,
+            $recipientCoordinates,
+            true
+        );
+
+        $vehicle = new Vehicle(Vehicle::TYPE_BICYCLE);
+
+        $time = $distanceCalculator->calculateTime($diagonalDistance, $vehicle->averageSpeed);
+
+        $this->assertEquals(1.8, $time);
     }
 }
