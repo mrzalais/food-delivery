@@ -15,15 +15,13 @@ class Map
     public const TYPE_UNKNOWN = 'unknown';
 
     public array $parsed;
+    public string $string;
 
-    public function __construct(array|string $map)
+    public function __construct(string $map)
     {
-        if (is_string($map)) {
-            $parser = new MapParser;
-            $this->parsed = $parser->parse($map);
-        } else {
-            $this->parsed = $map;
-        }
+        $parser = new MapParser;
+        $this->string = $map;
+        $this->parsed = $parser->parse($map);
     }
 
     public function insertObject(array $coordinates, string $type): void

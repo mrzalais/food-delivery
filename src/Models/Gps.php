@@ -41,4 +41,9 @@ class Gps
         $element = $this->map->parsed[$line][$key];
         return ['x' => $element['x'], 'y' => $element['y']];
     }
+
+    public function getMapString(): string
+    {
+        return $this->map->string;
+    }
 }

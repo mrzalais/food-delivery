@@ -44,4 +44,18 @@ class GpsTest extends TestCase
             $gps->getLocationOfItemByCoordinates($order->coordinates)
         );
     }
+
+    public function testItCanReturnAStringOfTheNearestMap(): void
+    {
+        $mapString = "_W|BO";
+
+        $map = new Map($mapString);
+
+        $gps = new Gps($map);
+
+        $this->assertEquals(
+            $mapString,
+            $gps->getMapString()
+        );
+    }
 }
