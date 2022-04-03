@@ -6,8 +6,6 @@ namespace Tests\Leaderboard;
 
 use App\Models\Gps;
 use App\Models\Map;
-use App\Models\Courier;
-use App\Models\MapParser;
 use PHPUnit\Framework\TestCase;
 use App\Models\DistanceCalculator;
 

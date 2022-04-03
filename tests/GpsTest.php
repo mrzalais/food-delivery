@@ -7,7 +7,6 @@ namespace Tests\Leaderboard;
 use App\Models\Gps;
 use App\Models\Map;
 use App\Models\Order;
-use App\Models\MapParser;
 use PHPUnit\Framework\TestCase;
 
 class GpsTest extends TestCase

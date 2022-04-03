@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Tests\Leaderboard;
 
 use App\Models\Order;
-use App\Models\Courier;
 use App\Models\Vehicle;
 use PHPUnit\Framework\TestCase;
 use App\Factories\CourierFactory;
