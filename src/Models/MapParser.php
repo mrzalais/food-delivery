@@ -8,8 +8,9 @@ class MapParser
     public const TYPE_WATER = 'water';
     public const TYPE_LAND = 'land';
     public const TYPE_ROAD = 'road';
-    public const TYPE_USER = 'user';
+    public const TYPE_COURIER = 'courier';
     public const TYPE_ORDER = 'order';
+    public const TYPE_RECIPIENT = 'recipient';
 
     public const TYPE_UNKNOWN = 'unknown';
 
@@ -52,11 +53,11 @@ class MapParser
                             'type' => self::TYPE_ROAD,
                         ];
                         break;
-                    case 'X':
+                    case 'C':
                         $currentLine[] = [
                             'x' => $j,
                             'y' => $i,
-                            'type' => self::TYPE_USER,
+                            'type' => self::TYPE_COURIER,
                         ];
                         break;
                     case 'O':
@@ -64,6 +65,13 @@ class MapParser
                             'x' => $j,
                             'y' => $i,
                             'type' => self::TYPE_ORDER,
+                        ];
+                        break;
+                    case 'R':
+                        $currentLine[] = [
+                            'x' => $j,
+                            'y' => $i,
+                            'type' => self::TYPE_RECIPIENT,
                         ];
                         break;
                     default:
