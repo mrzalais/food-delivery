@@ -54,6 +54,11 @@ class PathFinder
         return substr_count($this->stringWithPath, '.');
     }
 
+    public function getDistanceOfVisitedTilesInKilometers(): float
+    {
+        return $this->getCountOfVisitedTiles() / 10;
+    }
+
     public function getHumanReadableResult(): string
     {
         return sprintf(
