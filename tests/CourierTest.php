@@ -22,6 +22,20 @@ class CourierTest extends TestCase
         $this->assertEquals([$order], $courier->getActiveDeliveries());
     }
 
+    public function testItCanHaveMultipleActiveDeliveriesSimultaneously(): void
+    {
+        $factory = new CourierFactory;
+        $courier = $factory->newCourier();
+
+        $orderA = new Order([1, 1], [2, 2]);
+        $courier->setActiveDelivery($orderA);
+
+        $orderB = new Order([2, 2], [3, 3]);
+        $courier->setActiveDelivery($orderB);
+
+        $this->assertEquals([$orderA, $orderB], $courier->getActiveDeliveries());
+    }
+
     public function testItCanHaveAVehicle(): void
     {
         $factory = new CourierFactory;
