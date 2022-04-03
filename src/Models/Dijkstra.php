@@ -18,6 +18,9 @@ class Dijkstra
      */
     private $length;
 
+    public float $startTime;
+    public float $finishTime;
+
     /**
      * Dijkstra constructor.
      *
@@ -40,6 +43,7 @@ class Dijkstra
      */
     public function findPath(object $src, object $dst): array
     {
+        $this->startTime = microtime(true);
         // setup
         $queue = new MinQueue();
         $distance = new SplObjectStorage();
@@ -53,6 +57,7 @@ class Dijkstra
             $u = $queue->extract();
 
             if ($u === $dst) {
+                $this->finishTime = microtime(true);
                 return $this->buildPath($dst, $path);
             }
 
