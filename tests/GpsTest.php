@@ -5,42 +5,44 @@ declare(strict_types=1);
 namespace Tests\Leaderboard;
 
 use App\Models\Gps;
+use App\Models\Map;
 use App\Models\Order;
 use App\Models\MapParser;
 use PHPUnit\Framework\TestCase;
 
 class GpsTest extends TestCase
 {
-    public function testItReturnsUsersCurrentLocation(): void
+    public function testItReturnsCouriersCurrentLocation(): void
     {
-        $map = "_W|XW";
+        $map = new Map("_W|CW");
+        $gps = new Gps($map);
 
-        $gps = new Gps($map, new MapParser);
-        $location = $gps->getLocationOfItem(MapParser::TYPE_USER);
+        $location = $gps->getLocationOfItemByType(Map::TYPE_COURIER);
 
         $this->assertEquals(['x' => 0, 'y' => 1], $location);
     }
 
     public function testItReturnsFalseIfCurrentLocationIsNotFound(): void
     {
-        $map = "_W|BW";
+        $map = new Map("_W|BW");
+        $gps = new Gps($map);
 
-        $gps = new Gps($map, new MapParser);
-        $location = $gps->getLocationOfItem(MapParser::TYPE_USER);
+        $location = $gps->getLocationOfItemByType(Map::TYPE_COURIER);
 
         $this->assertFalse($location);
     }
 
     public function testItReturnsOrderLocation(): void
     {
-        $map = "_W|BO";
+        $map = new Map("_W|BO");
 
-        $gps = new Gps($map, new MapParser);
+        $gps = new Gps($map);
 
-        $order = new Order(1, 1, [2, 2]);
+        $order = new Order([1, 1], [2, 2]);
 
-        $gps->initOrder($order);
-
-        $this->assertEquals(['x' => 1, 'y' => 1], $gps->order->coordinates);
+        $this->assertEquals(
+            ['x' => 1, 'y' => 1, 'type' => Map::TYPE_ORDER],
+            $gps->getLocationOfItemByCoordinates($order->coordinates)
+        );
     }
 }

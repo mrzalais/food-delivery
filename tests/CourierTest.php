@@ -8,13 +8,16 @@ use App\Models\Order;
 use App\Models\Courier;
 use App\Models\Vehicle;
 use PHPUnit\Framework\TestCase;
+use App\Factories\CourierFactory;
 
 class CourierTest extends TestCase
 {
     public function testItCanGetAssignedAnActiveDelivery(): void
     {
-        $courier = new Courier();
-        $order = new Order(1, 1, [2, 2]);
+        $factory = new CourierFactory;
+        $courier = $factory->newCourier();
+
+        $order = new Order([1, 1], [2, 2]);
         $courier->setActiveDelivery($order);
 
         $this->assertEquals([$order], $courier->getActiveDeliveries());
@@ -22,7 +25,9 @@ class CourierTest extends TestCase
 
     public function testItCanHaveAVehicle(): void
     {
-        $courier = new Courier();
+        $factory = new CourierFactory;
+        $courier = $factory->newCourier();
+
         $vehicle = new Vehicle(Vehicle::TYPE_BICYCLE, 15);
         $courier->setActiveVehicle($vehicle);
 
@@ -31,7 +36,9 @@ class CourierTest extends TestCase
 
     public function testItCanMultipleVehiclesButOnlyOneActiveOne(): void
     {
-        $courier = new Courier();
+        $factory = new CourierFactory;
+        $courier = $factory->newCourier();
+
         $bicycle = new Vehicle(Vehicle::TYPE_BICYCLE, 20);
         $car = new Vehicle(Vehicle::TYPE_CAR, 25);
         $courier->addVehicle($bicycle);
@@ -46,7 +53,9 @@ class CourierTest extends TestCase
 
     public function testSettingNewActiveVehicleOverridesPreviousOne(): void
     {
-        $courier = new Courier();
+        $factory = new CourierFactory;
+        $courier = $factory->newCourier();
+
         $bicycle = new Vehicle(Vehicle::TYPE_BICYCLE, 20);
         $car = new Vehicle(Vehicle::TYPE_CAR, 25);
 

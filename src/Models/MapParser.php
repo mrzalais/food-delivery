@@ -4,16 +4,6 @@ namespace App\Models;
 
 class MapParser
 {
-    public const TYPE_BUILDING = 'building';
-    public const TYPE_WATER = 'water';
-    public const TYPE_LAND = 'land';
-    public const TYPE_ROAD = 'road';
-    public const TYPE_COURIER = 'courier';
-    public const TYPE_ORDER = 'order';
-    public const TYPE_RECIPIENT = 'recipient';
-
-    public const TYPE_UNKNOWN = 'unknown';
-
     public function parse(string $map): array
     {
         $lines = explode("|", $map);
@@ -29,56 +19,56 @@ class MapParser
                         $currentLine[] = [
                             'x' => $j,
                             'y' => $i,
-                            'type' => self::TYPE_BUILDING,
+                            'type' => Map::TYPE_BUILDING,
                         ];
                         break;
                     case 'W':
                         $currentLine[] = [
                             'x' => $j,
                             'y' => $i,
-                            'type' => self::TYPE_WATER,
+                            'type' => Map::TYPE_WATER,
                         ];
                         break;
                     case 'L':
                         $currentLine[] = [
                             'x' => $j,
                             'y' => $i,
-                            'type' => self::TYPE_LAND,
+                            'type' => Map::TYPE_LAND,
                         ];
                         break;
                     case '_':
                         $currentLine[] = [
                             'x' => $j,
                             'y' => $i,
-                            'type' => self::TYPE_ROAD,
+                            'type' => Map::TYPE_ROAD,
                         ];
                         break;
                     case 'C':
                         $currentLine[] = [
                             'x' => $j,
                             'y' => $i,
-                            'type' => self::TYPE_COURIER,
+                            'type' => Map::TYPE_COURIER,
                         ];
                         break;
                     case 'O':
                         $currentLine[] = [
                             'x' => $j,
                             'y' => $i,
-                            'type' => self::TYPE_ORDER,
+                            'type' => Map::TYPE_ORDER,
                         ];
                         break;
                     case 'R':
                         $currentLine[] = [
                             'x' => $j,
                             'y' => $i,
-                            'type' => self::TYPE_RECIPIENT,
+                            'type' => Map::TYPE_RECIPIENT,
                         ];
                         break;
                     default:
                         $currentLine[] = [
                             'x' => $j,
                             'y' => $i,
-                            'type' => self::TYPE_UNKNOWN,
+                            'type' => Map::TYPE_UNKNOWN,
                         ];
                 }
             }

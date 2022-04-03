@@ -4,22 +4,23 @@ namespace App\Models;
 
 class Gps
 {
-    private string $map;
-    private MapParser $mapParser;
-    public Order $order;
+    private Map $map;
 
-    public function __construct(string $map, MapParser $mapParser)
+    public function __construct(Map $map)
     {
         $this->map = $map;
-        $this->mapParser = $mapParser;
     }
 
-    public function getLocationOfItem(string $type): array|false
+    public function getLocationOfItemByCoordinates(array $coordinates): array|false
     {
-        $parsedMap = $this->mapParser->parse($this->map);
+        return $this->map->parsed[$coordinates['y']][$coordinates['x']];
+    }
+
+    public function getLocationOfItemByType(string $type): array|false
+    {
         $key = null;
         $line = null;
-        foreach ($parsedMap as $x => $parsedMapLine) {
+        foreach ($this->map->parsed as $x => $parsedMapLine) {
             $search = array_search(
                 $type,
                 array_column($parsedMapLine, 'type'),
@@ -37,12 +38,7 @@ class Gps
             return false;
         }
 
-        $element = $parsedMap[$line][$key];
+        $element = $this->map->parsed[$line][$key];
         return ['x' => $element['x'], 'y' => $element['y']];
-    }
-
-    public function initOrder(Order $order): void
-    {
-        $this->order = $order;
     }
 }

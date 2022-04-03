@@ -6,19 +6,15 @@ class Order
 {
     public array $coordinates;
     public array $destinationCoordinates;
-    private int $x;
-    private int $y;
     private Courier $courier;
 
-    public function __construct(int $x, int $y, array $destinationCoordinates)
+    public function __construct(array $orderCoordinates, array $destinationCoordinates)
     {
-        $this->x = $x;
-        $this->y = $y;
-        $this->coordinates = ['x' => $x, 'y' => $y];
-        $this->destinationCoordinates = $destinationCoordinates;
+        $this->coordinates = ['x' => $orderCoordinates[0], 'y' => $orderCoordinates[1]];
+        $this->destinationCoordinates = ['x' => $destinationCoordinates[0], 'y' => $destinationCoordinates[1]];
     }
 
-    public function assignCourier(Courier $courier)
+    public function assignCourier(Courier $courier): void
     {
         $this->courier = $courier;
     }

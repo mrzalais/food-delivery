@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\Leaderboard;
 
 use App\Models\Gps;
+use App\Models\Map;
 use App\Models\Courier;
 use App\Models\MapParser;
 use PHPUnit\Framework\TestCase;
@@ -18,11 +19,10 @@ class DistanceCalculatorTest extends TestCase
             . "C____R|"
             . "BBBBBB";
 
-        $parser = new MapParser;
-
-        $gps = new Gps($map, $parser);
-        $courierCoordinates = $gps->getLocationOfItem(MapParser::TYPE_COURIER);
-        $recipientCoordinates = $gps->getLocationOfItem(MapParser::TYPE_RECIPIENT);
+        $map = new Map($map);
+        $gps = new Gps($map);
+        $courierCoordinates = $gps->getLocationOfItemByType(Map::TYPE_COURIER);
+        $recipientCoordinates = $gps->getLocationOfItemByType(Map::TYPE_RECIPIENT);
 
         $distanceCalculator = new DistanceCalculator;
 
@@ -43,11 +43,11 @@ class DistanceCalculatorTest extends TestCase
             . "BB_BB|"
             . "BBRBB";
 
-        $parser = new MapParser;
+        $map = new Map($map);
+        $gps = new Gps($map);
 
-        $gps = new Gps($map, $parser);
-        $courierCoordinates = $gps->getLocationOfItem(MapParser::TYPE_COURIER);
-        $recipientCoordinates = $gps->getLocationOfItem(MapParser::TYPE_RECIPIENT);
+        $courierCoordinates = $gps->getLocationOfItemByType(Map::TYPE_COURIER);
+        $recipientCoordinates = $gps->getLocationOfItemByType(Map::TYPE_RECIPIENT);
 
         $distanceCalculator = new DistanceCalculator;
 
@@ -67,11 +67,11 @@ class DistanceCalculatorTest extends TestCase
             . "_____|"
             . "____R|";
 
-        $parser = new MapParser;
+        $map = new Map($map);
+        $gps = new Gps($map);
 
-        $gps = new Gps($map, $parser);
-        $courierCoordinates = $gps->getLocationOfItem(MapParser::TYPE_COURIER);
-        $recipientCoordinates = $gps->getLocationOfItem(MapParser::TYPE_RECIPIENT);
+        $courierCoordinates = $gps->getLocationOfItemByType(Map::TYPE_COURIER);
+        $recipientCoordinates = $gps->getLocationOfItemByType(Map::TYPE_RECIPIENT);
 
         $distanceCalculator = new DistanceCalculator;
 
