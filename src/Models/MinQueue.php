@@ -3,32 +3,34 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use SplPriorityQueue;
+use SplObjectStorage;
+
 class MinQueue implements \Countable
 {
     /**
-     * @var \SplPriorityQueue
+     * @var SplPriorityQueue
      */
     private $queue;
 
     /**
-     * @var \SplObjectStorage
+     * @var SplObjectStorage
      */
-    private $register;
+    private SplObjectStorage $register;
 
     /**
      * MinQueue constructor.
      */
-
     public function __construct()
     {
-        $this->queue = new class extends \SplPriorityQueue
+        $this->queue = new class extends SplPriorityQueue
         {
             /** @inheritdoc */
             //TODO FIX THIS ATTRIBUTE USE
             #[\ReturnTypeWillChange]
-            public function compare($p, $q)
+            public function compare($priority1, $priority2): int
             {
-                return $q <=> $p;
+                return $priority2 <=> $priority1;
             }
         };
 
@@ -39,7 +41,7 @@ class MinQueue implements \Countable
      * @param object $value
      * @param mixed  $priority
      */
-    public function insert($value, $priority)
+    public function insert(object $value, mixed $priority)
     {
         $this->queue->insert($value, $priority);
         $this->register->attach($value);
@@ -48,7 +50,7 @@ class MinQueue implements \Countable
     /**
      * @return object
      */
-    public function extract()
+    public function extract(): object
     {
         $value = $this->queue->extract();
         $this->register->detach($value);
@@ -56,10 +58,7 @@ class MinQueue implements \Countable
         return $value;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function contains($value)
+    public function contains($value): bool
     {
         return $this->register->contains($value);
     }

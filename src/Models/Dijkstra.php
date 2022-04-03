@@ -3,7 +3,8 @@ declare(strict_types=1);
 
 namespace App\Models;
 
-use App\Models\MinQueue;
+use SplObjectStorage;
+use App\Exceptions\PathInMazeNotFoundException;
 
 class Dijkstra
 {
@@ -34,15 +35,15 @@ class Dijkstra
      *
      * @param object $src
      * @param object $dst
-     *
      * @return array
+     * @throws PathInMazeNotFoundException
      */
-    public function findPath($src, $dst): array
+    public function findPath(object $src, object $dst): array
     {
         // setup
         $queue = new MinQueue();
-        $distance = new \SplObjectStorage();
-        $path = new \SplObjectStorage();
+        $distance = new SplObjectStorage();
+        $path = new SplObjectStorage();
 
         // init
         $queue->insert($src, 0);
@@ -57,7 +58,7 @@ class Dijkstra
 
             foreach (call_user_func($this->neighbors, $u) as $v) {
                 $alt = $distance[$u] + call_user_func($this->length, $u, $v);
-                $best = isset($distance[$v]) ? $distance[$v] : INF;
+                $best = $distance[$v] ?? INF;
 
                 if ($alt < $best) {
                     $distance[$v] = $alt;
@@ -70,16 +71,15 @@ class Dijkstra
             }
         }
 
-        throw new \LogicException('No path found.');
+        throw new PathInMazeNotFoundException;
     }
 
     /**
      * @param object            $dst
-     * @param \SplObjectStorage $path
-     *
+     * @param SplObjectStorage $path
      * @return array
      */
-    private function buildPath($dst, \SplObjectStorage $path): array
+    private function buildPath(object $dst, SplObjectStorage $path): array
     {
         $result = [$dst];
 

@@ -8,7 +8,7 @@ class Maze
     /**
      * @var array
      */
-    private $tiles = [];
+    private array $tiles;
 
     /**
      * Maze constructor.
@@ -47,8 +47,8 @@ class Maze
     }
 
     /**
-     * @param callable $renderer
-     * @param string   $rowDelimiter
+     * @param callable|null $renderer
+     * @param string        $rowDelimiter
      *
      * @return string
      */
@@ -94,7 +94,7 @@ class Maze
      *
      * @return array
      */
-    public function getNeighbors($tile, array $filter = []): array
+    public function getNeighbors(object $tile, array $filter = []): array
     {
         $neighbors = [];
         foreach ([
@@ -119,7 +119,7 @@ class Maze
      *
      * @return float
      */
-    public function getDistance($a, $b): float
+    public function getDistance(object $a, object $b): float
     {
         $p = $b->row - $a->row;
         $q = $b->col - $a->col;
