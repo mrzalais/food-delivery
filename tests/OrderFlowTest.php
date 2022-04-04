@@ -17,18 +17,19 @@ class OrderFlowTest extends TestCase
 {
     public function testOrderFlow(): void
     {
-        $string = "_BBLLWLLWWWWLLBB_|
-L_BLLWLLWWWWLLBB_|
-L_BBLLWLWWWWLLBB_|
-LL_BLLWLWWWWLLBB_|
-LLL_LLWLWWWWLLBB_|
-LLLL_LWLWWWWLLBB_|
-LLLLW_LLWWWWLLBB_|
-LLLLWL_LWWWWLLB_B|
-LLLLWL_LWWWWLB_BB|
-LLLLWL_LWWWWL_BBB|
-LLLLWL_LWWWWL_BBB|
-LLLLWL___________";
+        $string = "_BBLLWLLWWWWLLBB_|"
+                . "L_BLLWLLWWWWLLBB_|"
+                . "L_BBLLWLWWWWLLBB_|"
+                . "LL_BLLWLWWWWLLBB_|"
+                . "LLL_LLWLWWWWLLBB_|"
+                . "LLLL_LWLWWWWLLBB_|"
+                . "LLLLW_LLWWWWLLBB_|"
+                . "LLLLWL_LWWWWLLB_B|"
+                . "LLLLWL_LWWWWLB_BB|"
+                . "LLLLWL_LWWWWL_BBB|"
+                . "LLLLWL_LWWWWL_BBB|"
+                . "LLLLWL___________";
+
         $map = new Map($string);
         $order = new Order([0, 0], [16, 0]);
         $vehicle = new Vehicle(Vehicle::TYPE_BICYCLE);
@@ -36,9 +37,7 @@ LLLLWL___________";
         $courierFactory = new CourierFactory;
         $courier = $courierFactory->newCourier();
 
-
         $this->assertEquals(Order::STATUS_WAITING_FOR_COURIER, $order->status);
-
 
         $courier->setActiveVehicle($vehicle);
         $courier->location = ['x' => 6, 'y' => 11];

@@ -4,7 +4,7 @@ namespace App\Models;
 
 class PaymentCalculator
 {
-    public function calculatePayment(int $distance): float
+    public function calculatePayment(float $distance): float
     {
         switch ($distance) {
             case $distance < 1:
