@@ -7,10 +7,12 @@ class Courier extends User
     private array $activeDeliveries;
     private Vehicle $activeVehicle;
     private array $vehicles;
+    public array $location;
 
-    public function setActiveDelivery(Order $order): void
+    public function assignDelivery(Order $order): void
     {
         $this->activeDeliveries[] = $order;
+        $order->setStatus(Order::STATUS_COURIER_ON_THE_WAY_TO_ORDER);
     }
 
     public function getActiveDeliveries(): array
