@@ -7,6 +7,8 @@ class Courier extends User
     private array $activeDeliveries;
     private Vehicle $activeVehicle;
     private array $vehicles;
+    private float $balance = 0;
+    public array $coordinates;
 
     public function setActiveDelivery(Order $order): void
     {
@@ -36,5 +38,15 @@ class Courier extends User
     public function getAllVehicles(): array
     {
         return $this->vehicles;
+    }
+
+    public function getBalance(): float
+    {
+        return $this->balance;
+    }
+
+    public function addToBalance(Payment $payment): void
+    {
+        $this->balance += $payment->amount;
     }
 }
