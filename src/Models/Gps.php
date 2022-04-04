@@ -51,4 +51,17 @@ class Gps
 
         return null;
     }
+
+    public function findByCoordinates(array $value)
+    {
+        foreach ($this->map->tiles as $y => $row) {
+            foreach ($row as $x => $tile) {
+                if ($x === $value['x'] && $y === $value['y']) {
+                    return $tile;
+                }
+            }
+        }
+
+        return null;
+    }
 }
