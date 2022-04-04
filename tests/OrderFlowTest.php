@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests;
 
 use App\Models\Map;
+use App\Models\Gps;
 use App\Models\Order;
 use App\Models\Vehicle;
 use App\Models\Payment;
@@ -49,9 +50,11 @@ class OrderFlowTest extends TestCase
         $map->insertObject($order->destinationCoordinates, Map::TILE_TYPE_RECIPIENT);
         $map->insertObject($courier->location, Map::TILE_TYPE_COURIER);
 
+        $gps = new Gps($map);
+
         $pathFinder = new PathFinder(
-            $map->find('C'),
-            $map->find('O'),
+            $gps->find('C'),
+            $gps->find('O'),
             $map
         );
 
@@ -63,8 +66,8 @@ class OrderFlowTest extends TestCase
         $distance = $pathFinder->getCountOfVisitedTilesInKilometers();
 
         $pathFinder = new PathFinder(
-            $map->find('O'),
-            $map->find('R'),
+            $gps->find('O'),
+            $gps->find('R'),
             $map
         );
 

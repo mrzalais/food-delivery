@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests;
 
 use App\Models\Map;
+use App\Models\Gps;
 use App\Models\PathFinder;
 use PHPUnit\Framework\TestCase;
 
@@ -18,12 +19,15 @@ class PathFinderTest extends TestCase
      */
     public function testItCanFindEndingOfAMaze(string $map, string $result): void
     {
-        $maze = new Map($map);
+        $map = new Map($map);
+
+        $gps = new Gps($map);
+
 
         $pathFinder = new PathFinder(
-            $maze->find('C'),
-            $maze->find('R'),
-            $maze
+            $gps->find('C'),
+            $gps->find('R'),
+            $map
         );
 
         $pathFinder->initDijkstra();

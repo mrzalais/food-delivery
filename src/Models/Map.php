@@ -68,24 +68,6 @@ class Map
     }
 
     /**
-     * @param string $value
-     *
-     * @return object
-     */
-    public function find(string $value)
-    {
-        foreach ($this->tiles as $row) {
-            foreach ($row as $tile) {
-                if ($tile->value === $value) {
-                    return $tile;
-                }
-            }
-        }
-
-        return null;
-    }
-
-    /**
      * @param object $tile
      * @param array  $filter
      *

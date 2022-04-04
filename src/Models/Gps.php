@@ -33,4 +33,22 @@ class Gps
     {
         return $this->map->string;
     }
+
+    /**
+     * @param string $value
+     *
+     * @return object
+     */
+    public function find(string $value)
+    {
+        foreach ($this->map->tiles as $row) {
+            foreach ($row as $tile) {
+                if ($tile->value === $value) {
+                    return $tile;
+                }
+            }
+        }
+
+        return null;
+    }
 }
