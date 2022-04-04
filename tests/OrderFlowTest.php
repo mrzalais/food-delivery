@@ -6,9 +6,12 @@ namespace Tests;
 
 use App\Models\Map;
 use App\Models\Order;
+use App\Models\Vehicle;
+use App\Models\Payment;
 use App\Models\PathFinder;
 use PHPUnit\Framework\TestCase;
 use App\Factories\CourierFactory;
+use App\Models\PaymentCalculator;
 
 class OrderFlowTest extends TestCase
 {
@@ -27,20 +30,24 @@ LLLLWL_LWWWWL_BBB|
 LLLLWL_LWWWWL_BBB|
 LLLLWL___________";
         $map = new Map($string);
-
         $order = new Order([0, 0], [16, 0]);
-        $this->assertEquals(Order::STATUS_WAITING_FOR_COURIER, $order->status);
-        //New order and recipient placed on map
-        $map->insertObject($order->coordinates, Map::TILE_TYPE_ORDER);
-        $map->insertObject($order->destinationCoordinates, Map::TILE_TYPE_RECIPIENT);
+        $vehicle = new Vehicle(Vehicle::TYPE_BICYCLE);
 
         $courierFactory = new CourierFactory;
         $courier = $courierFactory->newCourier();
+
+
+        $this->assertEquals(Order::STATUS_WAITING_FOR_COURIER, $order->status);
+
+
+        $courier->setActiveVehicle($vehicle);
         $courier->location = ['x' => 6, 'y' => 11];
 
         $courier->assignDelivery($order);
         $this->assertEquals(Order::STATUS_COURIER_ON_THE_WAY_TO_ORDER, $order->status);
 
+        $map->insertObject($order->coordinates, Map::TILE_TYPE_ORDER);
+        $map->insertObject($order->destinationCoordinates, Map::TILE_TYPE_RECIPIENT);
         $map->insertObject($courier->location, Map::TILE_TYPE_COURIER);
 
         $pathFinder = new PathFinder(
@@ -70,8 +77,13 @@ LLLLWL___________";
         $this->assertEquals(Order::STATUS_COMPLETED, $order->status);
         //Recipient should see approx time total/left
 
+        $paymentCalculator = new PaymentCalculator;
+        $amount = $paymentCalculator->calculatePayment($distance);
 
-        //Courier picks up order which updates order status
-        //Courier receives payment
+        $this->assertEquals(0, $courier->getBalance());
+
+        $payment = new Payment($amount);
+        $courier->receivePayment($payment);
+        $this->assertEquals($amount, $courier->getBalance());
     }
 }
