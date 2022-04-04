@@ -41,7 +41,7 @@ class CourierTest extends TestCase
         $factory = new CourierFactory;
         $courier = $factory->newCourier();
 
-        $vehicle = new Vehicle(Vehicle::TYPE_BICYCLE, 15);
+        $vehicle = new Vehicle(Vehicle::TYPE_BICYCLE);
         $courier->setActiveVehicle($vehicle);
 
         $this->assertEquals($vehicle, $courier->getActiveVehicle());
@@ -52,8 +52,8 @@ class CourierTest extends TestCase
         $factory = new CourierFactory;
         $courier = $factory->newCourier();
 
-        $bicycle = new Vehicle(Vehicle::TYPE_BICYCLE, 20);
-        $car = new Vehicle(Vehicle::TYPE_CAR, 25);
+        $bicycle = new Vehicle(Vehicle::TYPE_BICYCLE);
+        $car = new Vehicle(Vehicle::TYPE_CAR);
         $courier->addVehicle($bicycle);
         $courier->addVehicle($car);
 
@@ -69,8 +69,8 @@ class CourierTest extends TestCase
         $factory = new CourierFactory;
         $courier = $factory->newCourier();
 
-        $bicycle = new Vehicle(Vehicle::TYPE_BICYCLE, 20);
-        $car = new Vehicle(Vehicle::TYPE_CAR, 25);
+        $bicycle = new Vehicle(Vehicle::TYPE_BICYCLE);
+        $car = new Vehicle(Vehicle::TYPE_CAR);
 
         $courier->setActiveVehicle($bicycle);
 

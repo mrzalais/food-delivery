@@ -16,7 +16,7 @@ class Map
     public const TILE_TYPE_BUILDING = 'B';
     public const TILE_TYPE_WATER = 'W';
     public const TILE_TYPE_LAND = 'L';
-    public const TILE_TYPE_ROAD = 'R';
+    public const TILE_TYPE_ROAD = '_';
     public const TILE_TYPE_COURIER = 'C';
     public const TILE_TYPE_ORDER = 'O';
     public const TILE_TYPE_RECIPIENT = 'R';
