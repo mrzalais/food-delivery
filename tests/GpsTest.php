@@ -16,9 +16,9 @@ class GpsTest extends TestCase
         $map = new Map("_W|CW");
         $gps = new Gps($map);
 
-        $location = $gps->getLocationOfItemByType(Map::TYPE_COURIER);
+        $location = $gps->getLocationOfItemByType(Map::TILE_TYPE_COURIER);
 
-        $this->assertEquals(['x' => 0, 'y' => 1], $location);
+        $this->assertEquals([0, 1], [$location->col, $location->row]);
     }
 
     public function testItReturnsFalseIfCurrentLocationIsNotFound(): void
@@ -28,34 +28,6 @@ class GpsTest extends TestCase
 
         $location = $gps->getLocationOfItemByType(Map::TYPE_COURIER);
 
-        $this->assertFalse($location);
-    }
-
-    public function testItReturnsOrderLocation(): void
-    {
-        $map = new Map("_W|BO");
-
-        $gps = new Gps($map);
-
-        $order = new Order([1, 1], [2, 2]);
-
-        $this->assertEquals(
-            ['x' => 1, 'y' => 1, 'type' => Map::TYPE_ORDER],
-            $gps->getLocationOfItemByCoordinates($order->coordinates)
-        );
-    }
-
-    public function testItCanReturnAStringOfTheNearestMap(): void
-    {
-        $mapString = "_W|BO";
-
-        $map = new Map($mapString);
-
-        $gps = new Gps($map);
-
-        $this->assertEquals(
-            $mapString,
-            $gps->getMapString()
-        );
+        $this->assertNull($location);
     }
 }

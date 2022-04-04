@@ -13,8 +13,8 @@ class DistanceCalculator
     {
         return ceil(
             sqrt(
-                abs($coordinatesA['x'] - $coordinatesB['x'])**2
-                + abs($coordinatesA['y'] - $coordinatesB['y'])**2
+                abs($coordinatesA[0] - $coordinatesB[1])**2
+                + abs($coordinatesA[0] - $coordinatesB[1])**2
             )
         ) / 10;
     }

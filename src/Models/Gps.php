@@ -11,35 +11,22 @@ class Gps
         $this->map = $map;
     }
 
-    public function getLocationOfItemByCoordinates(array $coordinates): array|false
-    {
-        return $this->map->parsed[$coordinates['y']][$coordinates['x']];
-    }
+    // public function getLocationOfItemByCoordinates(array $coordinates): array|false
+    // {
+    //     return $this->map->tiles[$coordinates['y']][$coordinates['x']];
+    // }
 
-    public function getLocationOfItemByType(string $type): array|false
+    public function getLocationOfItemByType(string $value)
     {
-        $key = null;
-        $line = null;
-        foreach ($this->map->parsed as $x => $parsedMapLine) {
-            $search = array_search(
-                $type,
-                array_column($parsedMapLine, 'type'),
-                true
-            );
-
-            if (is_int($search)) {
-                $key = $search;
-                $line = $x;
-                break;
+        foreach ($this->map->tiles as $row) {
+            foreach ($row as $tile) {
+                if ($tile->value === $value) {
+                    return $tile;
+                }
             }
         }
 
-        if (!is_int($key)) {
-            return false;
-        }
-
-        $element = $this->map->parsed[$line][$key];
-        return ['x' => $element['x'], 'y' => $element['y']];
+        return null;
     }
 
     public function getMapString(): string
