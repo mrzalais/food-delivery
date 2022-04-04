@@ -17,7 +17,7 @@ class CourierTest extends TestCase
         $courier = $factory->newCourier();
 
         $order = new Order([1, 1], [2, 2]);
-        $courier->setActiveDelivery($order);
+        $courier->assignDelivery($order);
 
         $this->assertEquals([$order], $courier->getActiveDeliveries());
     }
@@ -28,10 +28,10 @@ class CourierTest extends TestCase
         $courier = $factory->newCourier();
 
         $orderA = new Order([1, 1], [2, 2]);
-        $courier->setActiveDelivery($orderA);
+        $courier->assignDelivery($orderA);
 
         $orderB = new Order([2, 2], [3, 3]);
-        $courier->setActiveDelivery($orderB);
+        $courier->assignDelivery($orderB);
 
         $this->assertEquals([$orderA, $orderB], $courier->getActiveDeliveries());
     }

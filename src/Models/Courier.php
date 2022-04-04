@@ -9,6 +9,13 @@ class Courier extends User
     private array $vehicles;
     public array $location;
 
+    private float $balance;
+
+    public function __construct(string $email, string $mobileNumber, string $address) {
+        parent::__construct($email, $mobileNumber, $address);
+        $this->balance = 0;
+    }
+
     public function assignDelivery(Order $order): void
     {
         $this->activeDeliveries[] = $order;
@@ -38,5 +45,15 @@ class Courier extends User
     public function getAllVehicles(): array
     {
         return $this->vehicles;
+    }
+
+    public function getBalance(): float
+    {
+        return $this->balance;
+    }
+
+    public function receivePayment(Payment $payment): void
+    {
+        $this->balance += $payment->amount;
     }
 }
