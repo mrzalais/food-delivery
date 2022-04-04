@@ -9,15 +9,8 @@ class DistanceCalculator
         return abs($pointA - $pointB);
     }
 
-    public function getEuclideanDistanceInKilometers(array $coordinatesA, array $coordinatesB, bool $roundedUp = true): float
+    public function getEuclideanDistanceInKilometers(array $coordinatesA, array $coordinatesB): float
     {
-        if (!$roundedUp) {
-            return sqrt(
-                abs($coordinatesA['x'] - $coordinatesB['x'])**2
-                + abs($coordinatesA['y'] - $coordinatesB['y'])**2
-            ) / 10;
-        }
-
         return ceil(
             sqrt(
                 abs($coordinatesA['x'] - $coordinatesB['x'])**2

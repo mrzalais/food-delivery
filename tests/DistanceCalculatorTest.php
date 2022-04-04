@@ -74,13 +74,12 @@ class DistanceCalculatorTest extends TestCase
 
         $distanceCalculator = new DistanceCalculator;
 
-        $diagonalDistance = $distanceCalculator->getEuclideanDistance(
+        $diagonalDistance = $distanceCalculator->getEuclideanDistanceInKilometers(
             $courierCoordinates,
-            $recipientCoordinates,
-            true
+            $recipientCoordinates
         );
 
-        $this->assertEquals(6, ceil($diagonalDistance));
+        $this->assertEquals(0.6, $diagonalDistance);
     }
 
     public function testItCanCalculateTimeNeededToTravelTheDistance(): void
@@ -101,8 +100,7 @@ class DistanceCalculatorTest extends TestCase
 
         $diagonalDistance = $distanceCalculator->getEuclideanDistanceInKilometers(
             $courierCoordinates,
-            $recipientCoordinates,
-            true
+            $recipientCoordinates
         );
 
         $vehicle = new Vehicle(Vehicle::TYPE_BICYCLE);
