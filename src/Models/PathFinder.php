@@ -5,12 +5,12 @@ namespace App\Models;
 class PathFinder
 {
     private object $start;
-    private object $goal;
-    private Maze $maze;
+    private object   $goal;
+    private Map      $maze;
     private Dijkstra $dijkstra;
     private string $stringWithPath;
 
-    public function __construct(object $start, object $goal, Maze $maze)
+    public function __construct(object $start, object $goal, Map $maze)
     {
         $this->start = $start;
         $this->goal = $goal;

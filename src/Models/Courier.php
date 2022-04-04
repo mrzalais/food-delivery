@@ -8,6 +8,7 @@ class Courier extends User
     private Vehicle $activeVehicle;
     private array $vehicles;
     private float $balance = 0;
+    public array $coordinates;
 
     public function setActiveDelivery(Order $order): void
     {
