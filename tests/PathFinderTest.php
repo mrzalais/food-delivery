@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\Leaderboard;
+namespace Tests;
 
 use App\Models\Map;
 use App\Models\PathFinder;
@@ -18,7 +18,7 @@ class PathFinderTest extends TestCase
      */
     public function testItCanFindEndingOfAMaze(string $map, string $result): void
     {
-        $maze = Map::fromString($map);
+        $maze = new Map($map);
 
         $pathFinder = new PathFinder(
             $maze->find('C'),

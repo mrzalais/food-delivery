@@ -77,4 +77,29 @@ class MapParser
 
         return $parsedMap;
     }
+
+    /**
+     * @param string $maze
+     * @param string $rowDelimiter
+     * @return Map
+     */
+    public function fromString(string $maze, string $rowDelimiter = "|"): Map
+    {
+        $tiles = [];
+
+        foreach (explode($rowDelimiter, $maze) as $r => $row) {
+            $rowTiles = [];
+            foreach (str_split(trim($row)) as $c => $value) {
+                $rowTiles[] = (object)[
+                    'row' => $r,
+                    'col' => $c,
+                    'value' => $value
+                ];
+            }
+
+            $tiles[] = $rowTiles;
+        }
+
+        return new Map($tiles);
+    }
 }

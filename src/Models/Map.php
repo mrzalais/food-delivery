@@ -35,36 +35,12 @@ class Map
      */
     public function __construct(array|string $tiles = [])
     {
+        $parser = new MapParser;
         if (is_string($tiles)) {
-            $this->tiles = self::fromString($tiles)->tiles;
+            $this->tiles = $parser->fromString($tiles)->tiles;
         } else {
             $this->tiles = $tiles;
         }
-    }
-
-    /**
-     * @param string $maze
-     * @param string $rowDelimiter
-     * @return Map
-     */
-    public static function fromString(string $maze, string $rowDelimiter = "|"): Map
-    {
-        $tiles = [];
-
-        foreach (explode($rowDelimiter, $maze) as $r => $row) {
-            $rowTiles = [];
-            foreach (str_split(trim($row)) as $c => $value) {
-                $rowTiles[] = (object)[
-                    'row' => $r,
-                    'col' => $c,
-                    'value' => $value
-                ];
-            }
-
-            $tiles[] = $rowTiles;
-        }
-
-        return new self($tiles);
     }
 
     /**
