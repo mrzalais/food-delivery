@@ -20,14 +20,14 @@ class DistanceCalculatorTest extends TestCase
 
         $map = new Map($map);
         $gps = new Gps($map);
-        $courierCoordinates = $gps->getLocationOfItemByType(Map::TYPE_COURIER);
-        $recipientCoordinates = $gps->getLocationOfItemByType(Map::TYPE_RECIPIENT);
+        $courierCoordinates = $gps->getLocationOfItemByType(Map::TILE_TYPE_COURIER);
+        $recipientCoordinates = $gps->getLocationOfItemByType(Map::TILE_TYPE_RECIPIENT);
 
         $distanceCalculator = new DistanceCalculator;
 
         $horizontalDistance = $distanceCalculator->getDistanceBetweenTwoPoints(
-            $courierCoordinates['x'],
-            $recipientCoordinates['x']
+            $courierCoordinates->col,
+            $recipientCoordinates->col
         );
 
         $this->assertEquals(5, $horizontalDistance);
@@ -45,14 +45,14 @@ class DistanceCalculatorTest extends TestCase
         $map = new Map($map);
         $gps = new Gps($map);
 
-        $courierCoordinates = $gps->getLocationOfItemByType(Map::TYPE_COURIER);
-        $recipientCoordinates = $gps->getLocationOfItemByType(Map::TYPE_RECIPIENT);
+        $courierCoordinates = $gps->getLocationOfItemByType(Map::TILE_TYPE_COURIER);
+        $recipientCoordinates = $gps->getLocationOfItemByType(Map::TILE_TYPE_RECIPIENT);
 
         $distanceCalculator = new DistanceCalculator;
 
         $verticalDistance = $distanceCalculator->getDistanceBetweenTwoPoints(
-            $courierCoordinates['y'],
-            $recipientCoordinates['y']
+            $courierCoordinates->row,
+            $recipientCoordinates->row
         );
 
         $this->assertEquals(5, $verticalDistance);
@@ -69,14 +69,14 @@ class DistanceCalculatorTest extends TestCase
         $map = new Map($map);
         $gps = new Gps($map);
 
-        $courierCoordinates = $gps->getLocationOfItemByType(Map::TYPE_COURIER);
-        $recipientCoordinates = $gps->getLocationOfItemByType(Map::TYPE_RECIPIENT);
+        $courierCoordinates = $gps->getLocationOfItemByType(Map::TILE_TYPE_COURIER);
+        $recipientCoordinates = $gps->getLocationOfItemByType(Map::TILE_TYPE_RECIPIENT);
 
         $distanceCalculator = new DistanceCalculator;
 
         $diagonalDistance = $distanceCalculator->getEuclideanDistanceInKilometers(
-            $courierCoordinates,
-            $recipientCoordinates
+            [$courierCoordinates->col, $courierCoordinates->row],
+            [$recipientCoordinates->col, $recipientCoordinates->row]
         );
 
         $this->assertEquals(0.6, $diagonalDistance);
@@ -93,14 +93,14 @@ class DistanceCalculatorTest extends TestCase
         $map = new Map($map);
         $gps = new Gps($map);
 
-        $courierCoordinates = $gps->getLocationOfItemByType(Map::TYPE_COURIER);
-        $recipientCoordinates = $gps->getLocationOfItemByType(Map::TYPE_RECIPIENT);
+        $courierCoordinates = $gps->getLocationOfItemByType(Map::TILE_TYPE_COURIER);
+        $recipientCoordinates = $gps->getLocationOfItemByType(Map::TILE_TYPE_RECIPIENT);
 
         $distanceCalculator = new DistanceCalculator;
 
         $diagonalDistance = $distanceCalculator->getEuclideanDistanceInKilometers(
-            $courierCoordinates,
-            $recipientCoordinates
+            [$courierCoordinates->col, $courierCoordinates->row],
+            [$recipientCoordinates->col, $recipientCoordinates->row]
         );
 
         $vehicle = new Vehicle(Vehicle::TYPE_BICYCLE);
