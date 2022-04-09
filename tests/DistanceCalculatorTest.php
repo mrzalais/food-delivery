@@ -7,81 +7,12 @@ namespace Tests;
 use App\Models\Gps;
 use App\Models\Map;
 use App\Models\Vehicle;
+use App\Models\PathFinder;
 use PHPUnit\Framework\TestCase;
 use App\Models\DistanceCalculator;
 
 class DistanceCalculatorTest extends TestCase
 {
-    public function testItCanCalculateSimpleHorizontalDistance(): void
-    {
-        $map = "BBBBBB|"
-            . "C____R|"
-            . "BBBBBB";
-
-        $map = new Map($map);
-        $gps = new Gps($map);
-        $courierCoordinates = $gps->getLocationOfItemByType(Map::TILE_TYPE_COURIER);
-        $recipientCoordinates = $gps->getLocationOfItemByType(Map::TILE_TYPE_RECIPIENT);
-
-        $distanceCalculator = new DistanceCalculator;
-
-        $horizontalDistance = $distanceCalculator->getDistanceBetweenTwoPoints(
-            $courierCoordinates->col,
-            $recipientCoordinates->col
-        );
-
-        $this->assertEquals(5, $horizontalDistance);
-    }
-
-    public function testItCanCalculateSimpleVerticalDistance(): void
-    {
-        $map = "BBCBB|"
-            . "BB_BB|"
-            . "BB_BB|"
-            . "BB_BB|"
-            . "BB_BB|"
-            . "BBRBB";
-
-        $map = new Map($map);
-        $gps = new Gps($map);
-
-        $courierCoordinates = $gps->getLocationOfItemByType(Map::TILE_TYPE_COURIER);
-        $recipientCoordinates = $gps->getLocationOfItemByType(Map::TILE_TYPE_RECIPIENT);
-
-        $distanceCalculator = new DistanceCalculator;
-
-        $verticalDistance = $distanceCalculator->getDistanceBetweenTwoPoints(
-            $courierCoordinates->row,
-            $recipientCoordinates->row
-        );
-
-        $this->assertEquals(5, $verticalDistance);
-    }
-
-    public function testItCanCalculateSimpleDiagonalDistanceInAPerfectScenario(): void
-    {
-        $map = "C____|"
-            . "_____|"
-            . "_____|"
-            . "_____|"
-            . "____R|";
-
-        $map = new Map($map);
-        $gps = new Gps($map);
-
-        $courierCoordinates = $gps->getLocationOfItemByType(Map::TILE_TYPE_COURIER);
-        $recipientCoordinates = $gps->getLocationOfItemByType(Map::TILE_TYPE_RECIPIENT);
-
-        $distanceCalculator = new DistanceCalculator;
-
-        $diagonalDistance = $distanceCalculator->getEuclideanDistanceInKilometers(
-            [$courierCoordinates->col, $courierCoordinates->row],
-            [$recipientCoordinates->col, $recipientCoordinates->row]
-        );
-
-        $this->assertEquals(0.6, $diagonalDistance);
-    }
-
     public function testItCanCalculateTimeNeededToTravelTheDistance(): void
     {
         $map = "C____|"
@@ -90,23 +21,26 @@ class DistanceCalculatorTest extends TestCase
             . "_____|"
             . "____R|";
 
+        $distanceCalculator = new DistanceCalculator;
         $map = new Map($map);
         $gps = new Gps($map);
 
-        $courierCoordinates = $gps->getLocationOfItemByType(Map::TILE_TYPE_COURIER);
-        $recipientCoordinates = $gps->getLocationOfItemByType(Map::TILE_TYPE_RECIPIENT);
-
-        $distanceCalculator = new DistanceCalculator;
-
-        $diagonalDistance = $distanceCalculator->getEuclideanDistanceInKilometers(
-            [$courierCoordinates->col, $courierCoordinates->row],
-            [$recipientCoordinates->col, $recipientCoordinates->row]
+        $pathFinder = new PathFinder(
+            $gps->find('C'),
+            $gps->find('R'),
+            $map
         );
+
+        $pathFinder->initDijkstra();
+
+        $pathFinder->getPath(true);
+
+        $distance = $distanceCalculator->getCountOfVisitedTilesInKilometers($pathFinder->stringWithPath);
 
         $vehicle = new Vehicle(Vehicle::TYPE_BICYCLE);
 
-        $time = $distanceCalculator->calculateTime($diagonalDistance, $vehicle->averageSpeed);
+        $time = $distanceCalculator->calculateTime($distance, $vehicle->averageSpeed);
 
-        $this->assertEquals(1.8, $time);
+        $this->assertEquals(1.5, $time);
     }
 }

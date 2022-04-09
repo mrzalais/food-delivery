@@ -8,7 +8,7 @@ class PathFinder
     private object   $goal;
     private Map      $maze;
     private Dijkstra $dijkstra;
-    private string $stringWithPath = '';
+    public string $stringWithPath = '';
 
     public function __construct(object $start, object $goal, Map $maze)
     {
@@ -47,11 +47,6 @@ class PathFinder
         }
 
         return $path;
-    }
-
-    public function getCountOfVisitedTilesInKilometers(): int
-    {
-        return substr_count($this->stringWithPath, '.');
     }
 
     public function getHumanReadableResult(): string

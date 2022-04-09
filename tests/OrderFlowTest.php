@@ -13,6 +13,7 @@ use App\Models\PathFinder;
 use PHPUnit\Framework\TestCase;
 use App\Factories\CourierFactory;
 use App\Models\PaymentCalculator;
+use App\Models\DistanceCalculator;
 
 class OrderFlowTest extends TestCase
 {
@@ -34,6 +35,7 @@ class OrderFlowTest extends TestCase
         $map = new Map($string);
         $order = new Order([0, 0], [16, 0]);
         $vehicle = new Vehicle(Vehicle::TYPE_BICYCLE);
+        $distanceCalculator = new DistanceCalculator;
 
         $courierFactory = new CourierFactory;
         $courier = $courierFactory->newCourier();
@@ -63,7 +65,7 @@ class OrderFlowTest extends TestCase
         $order->setStatus(Order::STATUS_COURIER_ON_THE_WAY_TO_RECIPIENT);
         $this->assertEquals(Order::STATUS_COURIER_ON_THE_WAY_TO_RECIPIENT, $order->status);
 
-        $distance = $pathFinder->getCountOfVisitedTilesInKilometers();
+        $distance = $distanceCalculator->getCountOfVisitedTilesInKilometers($pathFinder->stringWithPath);
 
         $pathFinder = new PathFinder(
             $gps->find('O'),
@@ -73,7 +75,7 @@ class OrderFlowTest extends TestCase
 
         $pathFinder->initDijkstra();
 
-        $distance += $pathFinder->getCountOfVisitedTilesInKilometers();
+        $distance += $distanceCalculator->getCountOfVisitedTilesInKilometers($pathFinder->stringWithPath);
 
         $order->complete();
         $this->assertEquals(Order::STATUS_COMPLETED, $order->status);
