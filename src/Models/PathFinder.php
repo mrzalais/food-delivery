@@ -15,6 +15,10 @@ class PathFinder
         $this->start = $start;
         $this->goal = $goal;
         $this->maze = $maze;
+
+        $this->initDijkstra();
+
+        $this->getPath(true);
     }
 
     public function initDijkstra(): void

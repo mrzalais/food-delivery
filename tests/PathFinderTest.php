@@ -29,9 +29,7 @@ class PathFinderTest extends TestCase
             $map
         );
 
-        $pathFinder->initDijkstra();
-
-        $mazeStringWithPath = $pathFinder->getPath(true);
+        $mazeStringWithPath = $pathFinder->stringWithPath;
 
         $this->assertEquals(
             $result,

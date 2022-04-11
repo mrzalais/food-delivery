@@ -60,8 +60,6 @@ class OrderFlowTest extends TestCase
             $map
         );
 
-        $pathFinder->initDijkstra();
-
         $order->setStatus(Order::STATUS_COURIER_ON_THE_WAY_TO_RECIPIENT);
         $this->assertEquals(Order::STATUS_COURIER_ON_THE_WAY_TO_RECIPIENT, $order->status);
 
@@ -73,9 +71,13 @@ class OrderFlowTest extends TestCase
             $map
         );
 
-        $pathFinder->initDijkstra();
-
         $distance += $distanceCalculator->getCountOfVisitedTilesInKilometers($pathFinder->stringWithPath);
+
+        $this->assertEquals(4.0, $distance);
+
+        $time = $distanceCalculator->calculateTime($distance, $vehicle->averageSpeed);
+
+        $this->assertEquals(12, $time);
 
         $order->complete();
         $this->assertEquals(Order::STATUS_COMPLETED, $order->status);

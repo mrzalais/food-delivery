@@ -31,10 +31,6 @@ class DistanceCalculatorTest extends TestCase
             $map
         );
 
-        $pathFinder->initDijkstra();
-
-        $pathFinder->getPath(true);
-
         $distance = $distanceCalculator->getCountOfVisitedTilesInKilometers($pathFinder->stringWithPath);
 
         $vehicle = new Vehicle(Vehicle::TYPE_BICYCLE);
